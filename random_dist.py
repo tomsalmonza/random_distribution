@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import time
+#import python libraries to use
 import random
 import matplotlib.pyplot as plt
 
-inc = input("Interactive Graph? y/n: ")
+#Initial user inputs for graph
 rangeofnum = int(input("Enter Range: "))
 qty = int(input("Enter Samples: "))
+inc = input("Interactive Graph? y/n: ")
 if inc == "y":
     smp_refresh = int(input("Samples per refresh?:"))
 distribution = [0]*rangeofnum
+x = [*range(0,rangeofnum)]
+y = distribution
+
 
 def main():
-    x = [*range(0,rangeofnum)]
-    y = distribution
-
+    q = qty
     if inc == "n":
-        q = qty
         while q > 0:
             n = random.randint(0,(rangeofnum-1))
             distribution[n]=distribution[n]+1
             q = q-1
-        x = [*range(0,rangeofnum)]
-        plotmygraph(x,y)
+        plotmygraph([*range(0,rangeofnum)],distribution)
 
     elif inc == "y":
         plt.ion()
@@ -32,17 +32,15 @@ def main():
         plt.xlabel("Range")
         plt.ylabel("Frequency")
         plt.ylim(0,((qty/rangeofnum)*2))
-        q = qty
         count = 0
         while q > 0:
             n = random.randint(0,(rangeofnum-1))
             distribution[n]=distribution[n]+1
             q = q-1
             count = count+1
-            y = distribution
             if count%smp_refresh == 0:
                 line1.set_xdata(x)
-                line1.set_ydata(y)
+                line1.set_ydata(distribution)
                 plt.title(f"Random Distribution: Range: {rangeofnum} Samples: {qty-q} / {qty}")
                 figure.canvas.draw_idle()
                 figure.canvas.flush_events()
