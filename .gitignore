@@ -1,4 +1,2 @@
 #Ignore the rendered_outcomes directory
 /rendered_outcomes
-#ignore example code
-plotupdate.py

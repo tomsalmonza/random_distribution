@@ -38,10 +38,11 @@ def main():
             distribution[n]=distribution[n]+1
             q = q-1
             count = count+1
+            variation(count,rangeofnum)
             if count%smp_refresh == 0:
                 line1.set_xdata(x)
                 line1.set_ydata(distribution)
-                plt.title(f"Random Distribution: Range: {rangeofnum} Samples: {qty-q} / {qty}")
+                plt.title(f"Random Distribution: Range: {rangeofnum} Samples: {qty-q} / {qty} \n Variation: {total_var} Percent: {varpercent}")
                 figure.canvas.draw_idle()
                 figure.canvas.flush_events()
         plt.ioff()
@@ -55,9 +56,18 @@ def plotmygraph(x,y):
     plt.ylim(0,((qty/rangeofnum)*2))
     plt.xlabel("Range")
     plt.ylabel("Frequency")
-    plt.title(f"Random Distribution: Range: {rangeofnum} Samples: {qty}")
+    variation(qty,rangeofnum)
+    plt.title(f"Random Distribution: Range: {rangeofnum} Samples: {qty} \n Variation: {total_var} Percent: {varpercent}")
     plt.savefig(f"./rendered_outcomes/plot_{rangeofnum}_{qty}.jpg")
     plt.show()
+
+def variation(qty,rangeofnum):
+    global total_var, varpercent
+    even_dist_qty = qty/rangeofnum
+    pos_var = max(distribution) - even_dist_qty
+    neg_var = even_dist_qty - min(distribution)
+    total_var = pos_var + neg_var
+    varpercent = round((total_var / qty * 100),2)
 
 if __name__ == '__main__':
     main()
